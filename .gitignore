@@ -1,0 +1,39 @@
+# Build tools, outputs, and generated graphics.
+/.tools/
+/artifacts/
+/packaging/Assets/
+**/bin/
+**/obj/
+.vs/
+.idea/
+*.user
+*.suo
+*.log
+TestResults/
+
+# Signing credentials and local-only certificate metadata are never source.
+*.pfx
+*.p12
+*.p7b
+*.cer
+*.crt
+*.key
+*.pem
+signing-certificate.json
+certificate-trust-result.json
+
+# Private archives, local state, screenshots, and environment credentials.
+/Inbox/
+/data/
+/private/
+/screenshots/
+settings.json
+batch.json
+*.zip
+*.msix
+*.appx
+.env
+.env.*
+!.env.example
+Thumbs.db
+.DS_Store

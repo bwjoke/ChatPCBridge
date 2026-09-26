@@ -1,0 +1,26 @@
+name: Bug report / 缺陷报告
+description: Report a reproducible problem using synthetic data.
+body:
+  - type: markdown
+    attributes:
+      value: '请勿上传真实聊天、日志、batch.json、证书或个人路径。安全漏洞请使用 Security 页面的私密报告。'
+  - type: input
+    id: versions
+    attributes:
+      label: Versions / 版本
+      description: ChatPCBridge, Windows build, WeChat and destination app versions.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps / 复现步骤
+      description: Use fictional messages and a minimal synthetic archive.
+    validations:
+      required: true
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Expected and actual behavior / 预期与实际结果
+    validations:
+      required: true

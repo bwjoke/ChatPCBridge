@@ -1,0 +1,73 @@
+name: Windows build and tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: windows-2025
+    timeout-minutes: 20
+    defaults:
+      run:
+        shell: pwsh
+    env:
+      DOTNET_CLI_TELEMETRY_OPTOUT: '1'
+      DOTNET_NOLOGO: '1'
+      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: '1'
+      DOTNET_CLI_HOME: ${{ github.workspace }}/.tools/dotnet-home
+      NUGET_PACKAGES: ${{ github.workspace }}/.tools/nuget-packages
+    steps:
+      - name: Check out source
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Install pinned .NET SDK
+        uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4.3.1
+        with:
+          global-json-file: global.json
+      - name: Restore reviewed dependency lock files
+        run: |
+          $ErrorActionPreference = 'Stop'
+          dotnet restore ChatPCBridge.sln --locked-mode
+          if ($LASTEXITCODE -ne 0) { throw "Locked restore failed: $LASTEXITCODE" }
+      - name: Run archive inspection checks
+        run: |
+          $ErrorActionPreference = 'Stop'
+          dotnet run --project tests/ArchiveInspector.Tests/ArchiveInspector.Tests.csproj --configuration Release --no-restore
+          if ($LASTEXITCODE -ne 0) { throw "Archive tests failed: $LASTEXITCODE" }
+      - name: Run cross-process instance checks
+        run: |
+          $ErrorActionPreference = 'Stop'
+          dotnet run --project tests/InstanceCoordinator.Tests/InstanceCoordinator.Tests.csproj --configuration Release --no-restore
+          if ($LASTEXITCODE -ne 0) { throw "Instance tests failed: $LASTEXITCODE" }
+      - name: Run archive storage boundary checks
+        run: |
+          $ErrorActionPreference = 'Stop'
+          dotnet run --project tests/BridgeStore.Tests/BridgeStore.Tests.csproj --configuration Release --no-restore
+          if ($LASTEXITCODE -ne 0) { throw "Storage tests failed: $LASTEXITCODE" }
+      - name: Compile the manual share diagnostic
+        run: |
+          $ErrorActionPreference = 'Stop'
+          dotnet build tests/ShareProbe/ShareProbe.csproj --configuration Release --no-restore
+          if ($LASTEXITCODE -ne 0) { throw "ShareProbe build failed: $LASTEXITCODE" }
+      - name: Build unsigned MSIX
+        run: ./scripts/build.ps1 -DownloadBuildTools -Version 0.2.0.0 -NoRestore
+      - name: Upload unsigned build and checksum only
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: ChatPCBridge-unsigned-win-x64
+          path: |
+            artifacts/ChatPCBridge_0.2.0.0_x64.msix
+            artifacts/ChatPCBridge_0.2.0.0_x64.msix.sha256
+          if-no-files-found: error
+          retention-days: 7

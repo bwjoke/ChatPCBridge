@@ -1,0 +1,16 @@
+name: Feature request / 功能建议
+description: Explain a workflow that the project could support.
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Use case / 使用场景
+      description: Describe the problem without including private conversation contents.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior / 期望行为
+    validations:
+      required: true
