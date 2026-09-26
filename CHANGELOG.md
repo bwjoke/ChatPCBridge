@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.1 — Consistent application branding
+
+- Use ChatPCBridge consistently for application metadata and all product branding.
+- Replace source-specific names in the window, import dialog, prompts, errors and installer messages with neutral chat/archive wording.
+- Document persistent share registration and the difference between building an EXE and installing a signed MSIX.
+- Preserve package identity, archive storage, original filenames and chat content.
+
 ## 0.2.0 — First public source release
 
 - Publish a clean, independently maintained Windows project under the ChatPCBridge name.

@@ -8,7 +8,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <AssemblyName>ChatPCBridge</AssemblyName>
     <RootNamespace>ChatPCBridge</RootNamespace>
-    <Version>0.2.0</Version>
+    <Title>ChatPCBridge</Title>
+    <Product>ChatPCBridge</Product>
+    <Version>0.2.1</Version>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <SelfContained>true</SelfContained>

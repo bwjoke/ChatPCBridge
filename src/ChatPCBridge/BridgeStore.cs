@@ -293,7 +293,7 @@ public static class BridgeStore
             var data = operation.Data;
             batch = NewBatch("Windows 分享", data.AvailableFormats.ToArray());
             if (!data.Contains(StandardDataFormats.StorageItems))
-                throw new InvalidOperationException("没有收到文件。请在微信中使用合并转发，并选择聊天 ZIP。");
+                throw new InvalidOperationException("没有收到文件。请在来源应用中使用合并转发，并选择聊天 ZIP。");
             var items = await data.GetStorageItemsAsync();
             if (items.Count == 0 || items.Count > MaxFiles) throw new InvalidOperationException($"每次可接收 1–{MaxFiles} 个文件。");
             long batchBytes = 0;
@@ -304,7 +304,7 @@ public static class BridgeStore
                 if (extension is not (".zip" or ".txt")) throw new InvalidOperationException("当前版本接收 ZIP 和 TXT 文件。");
                 status($"正在完整保存 {i + 1}/{items.Count}：{file.Name}");
                 var basic = await file.GetBasicPropertiesAsync();
-                if (basic.Size > MaxFileBytes) throw new InvalidOperationException("单个文件超过 2 GB，建议在微信中分批选择记录。");
+                if (basic.Size > MaxFileBytes) throw new InvalidOperationException("单个文件超过 2 GB，建议分批选择记录。");
                 var copyLimit = Math.Min(MaxFileBytes, MaxBatchBytes - batchBytes);
                 if (basic.Size > (ulong)copyLimit) throw new InvalidOperationException("本批文件总大小超过 4 GB，请分批转发。");
                 string destination = FileDestination(batch, i + 1, file.Name);
