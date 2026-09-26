@@ -3,8 +3,8 @@ using System.Security.Cryptography;
 using System.Text;
 using ChatPCBridge.Core;
 
-var root = Path.Combine(Path.GetTempPath(), "ChatPCBridge-tests-" + Guid.NewGuid().ToString("N"));
-Directory.CreateDirectory(root);
+var testDirectory = Directory.CreateTempSubdirectory("ChatPCBridge-tests-");
+var root = testDirectory.FullName;
 var tests = new (string Name, Func<Task> Run)[]
 {
     ("UTF-8 Chinese text is preserved and original archive is unchanged", NormalUnicode),
@@ -42,7 +42,7 @@ try
 }
 finally
 {
-    Directory.Delete(root, recursive: true);
+    testDirectory.Delete(recursive: true);
 }
 Console.WriteLine($"{tests.Length - failures}/{tests.Length} tests passed.");
 return failures == 0 ? 0 : 1;
