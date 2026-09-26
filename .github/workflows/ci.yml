@@ -61,13 +61,13 @@ jobs:
           dotnet build tests/ShareProbe/ShareProbe.csproj --configuration Release --no-restore
           if ($LASTEXITCODE -ne 0) { throw "ShareProbe build failed: $LASTEXITCODE" }
       - name: Build unsigned MSIX
-        run: ./scripts/build.ps1 -DownloadBuildTools -Version 0.2.0.0 -NoRestore
+        run: ./scripts/build.ps1 -DownloadBuildTools -Version 0.2.1.0 -NoRestore
       - name: Upload unsigned build and checksum only
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: ChatPCBridge-unsigned-win-x64
           path: |
-            artifacts/ChatPCBridge_0.2.0.0_x64.msix
-            artifacts/ChatPCBridge_0.2.0.0_x64.msix.sha256
+            artifacts/ChatPCBridge_0.2.1.0_x64.msix
+            artifacts/ChatPCBridge_0.2.1.0_x64.msix.sha256
           if-no-files-found: error
           retention-days: 7

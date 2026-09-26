@@ -8,12 +8,12 @@
   <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
   <Grid>
    <StackPanel><TextBlock Text="ChatPCBridge" FontSize="28" FontWeight="SemiBold" Foreground="#142B30"/>
-    <TextBlock Text="把微信聊天记录带到 ChatGPT" Margin="0,7,0,0" Foreground="#52656D" FontSize="16"/>
+    <TextBlock Text="把聊天记录带到 ChatGPT" Margin="0,7,0,0" Foreground="#52656D" FontSize="16"/>
    </StackPanel>
    <Button Content="导入 ZIP / TXT" HorizontalAlignment="Right" VerticalAlignment="Center" Click="ImportClick"/>
   </Grid>
   <Border Grid.Row="1" Background="#E4F4EF" CornerRadius="10" Padding="18,14" Margin="0,22,0,20">
-   <StackPanel><TextBlock Text="微信多选 → 合并转发 → 转发到其他应用 → ChatPCBridge" Foreground="#125A48" FontWeight="SemiBold" TextWrapping="Wrap"/>
+   <StackPanel><TextBlock Text="选择聊天记录 → 合并转发 → 转发到其他应用 → ChatPCBridge" Foreground="#125A48" FontWeight="SemiBold" TextWrapping="Wrap"/>
     <TextBlock Text="也可以把已有 ZIP 拖到这个窗口。原始文件会完整保留在本机。" Margin="0,6,0,0" Foreground="#3D6C61"/>
    </StackPanel>
   </Border>
@@ -41,11 +41,11 @@
    </Border>
   </Grid>
   <StackPanel Grid.Row="3" Margin="0,19,0,0">
-   <DockPanel><CheckBox x:Name="AutoOpenCheck" Content="收到微信分享后，自动复制文件并打开 ChatGPT" VerticalAlignment="Center" Checked="SettingsChanged" Unchecked="SettingsChanged"/>
+   <DockPanel><CheckBox x:Name="AutoOpenCheck" Content="收到分享后，自动复制文件并打开 ChatGPT" VerticalAlignment="Center" Checked="SettingsChanged" Unchecked="SettingsChanged"/>
     <ComboBox x:Name="TargetCombo" Width="165" HorizontalAlignment="Right" SelectionChanged="SettingsChanged"><ComboBoxItem Content="当前新版 ChatGPT" Tag="current"/><ComboBoxItem Content="ChatGPT Classic" Tag="classic"/><ComboBoxItem Content="ChatGPT 网页版" Tag="web"/></ComboBox>
    </DockPanel>
    <ProgressBar x:Name="Progress" Height="3" IsIndeterminate="True" Visibility="Collapsed" Margin="0,14,0,0"/>
-   <TextBlock x:Name="StatusText" Text="等待从微信分享，或导入已有文件。" Foreground="#52656D" Margin="0,12,0,0" TextWrapping="Wrap"/>
+   <TextBlock x:Name="StatusText" Text="等待接收分享，或导入已有文件。" Foreground="#52656D" Margin="0,12,0,0" TextWrapping="Wrap"/>
   </StackPanel>
  </Grid>
 </Window>

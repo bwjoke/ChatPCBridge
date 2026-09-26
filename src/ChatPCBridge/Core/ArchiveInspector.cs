@@ -73,7 +73,7 @@ public static class ArchiveInspector
             }
 
             // Bound central-directory parsing before ZipArchive allocates entry metadata.
-            // The normal Windows WeChat export is a small, single-volume ZIP.
+            // A typical exported chat archive is a small, single-volume ZIP.
             var directoryCheck = await CheckDirectoryBudgetAsync(file, cancellationToken).ConfigureAwait(false);
             if (directoryCheck.Warning is not null)
             {

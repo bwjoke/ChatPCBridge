@@ -3,7 +3,7 @@ param(
     [string]$DotnetPath,
     [string]$ProjectPath = (Join-Path $PSScriptRoot '..\src\ChatPCBridge\ChatPCBridge.csproj'),
     [string]$SdkToolsPath,
-    [ValidatePattern('^\d+\.\d+\.\d+\.\d+$')][string]$Version = '0.2.0.0',
+    [ValidatePattern('^\d+\.\d+\.\d+\.\d+$')][string]$Version = '0.2.1.0',
     [ValidateSet('x64','arm64')][string]$Architecture = 'x64',
     [string]$CertificateThumbprint,
     [switch]$NoRestore,

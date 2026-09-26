@@ -33,5 +33,5 @@ if ($signature.Status -ne 'Valid') {
 if ($PSCmdlet.ShouldProcess('Current user', "Install ChatPCBridge $($manifest.Package.Identity.Version)")) {
     Add-AppxPackage -Path $PackagePath
     Get-AppxPackage -Name 'ChatPCBridge.Local' | Where-Object { $_.Name -eq 'ChatPCBridge.Local' -and $_.Publisher -eq 'CN=ChatPCBridge Local Development' } | Select-Object Name, Version, PackageFamilyName, InstallLocation
-    Write-Host 'Installed. Close and reopen the WeChat forwarding dialog to refresh its target list.'
+    Write-Host 'ChatPCBridge is installed. Close and reopen the source application forwarding dialog to refresh its target list.'
 }

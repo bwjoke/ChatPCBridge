@@ -10,11 +10,11 @@ Run these commands from the repository root. Download the SDK from [Microsoft](h
 ./scripts/build.ps1 -DownloadBuildTools
 ```
 
-The default version is `0.2.0.0`. This builds a self-contained x64 application, generates icons from the geometry in `New-Assets.ps1`, and creates:
+The default version is `0.2.1.0`. This builds a self-contained x64 application, generates icons from the geometry in `New-Assets.ps1`, and creates:
 
 ```text
-artifacts/ChatPCBridge_0.2.0.0_x64.msix
-artifacts/ChatPCBridge_0.2.0.0_x64.msix.sha256
+artifacts/ChatPCBridge_0.2.1.0_x64.msix
+artifacts/ChatPCBridge_0.2.1.0_x64.msix.sha256
 ```
 
 `-DownloadBuildTools` explicitly downloads the pinned official `Microsoft.Windows.SDK.BuildTools` NuGet package, version `10.0.26100.9169`, to this repository's `.tools` folder and verifies its pinned SHA256. Both MakeAppx and SignTool must also have valid Microsoft Authenticode signatures before execution. Subsequent builds can omit that switch. Alternatively pass `-SdkToolsPath` with the directory containing those two tools. `-DotnetPath` can point to a portable `dotnet.exe`; otherwise the script uses `.tools/dotnet/dotnet.exe` or the SDK on `PATH`.
@@ -22,6 +22,8 @@ artifacts/ChatPCBridge_0.2.0.0_x64.msix.sha256
 The publish step uses locked NuGet restore. Use `-NoRestore` only after a successful restore of the same source and target runtime. CI verifies x64; experimenting with `-Architecture arm64` also requires intentionally regenerating and reviewing runtime-specific dependency lock files. Set a higher four-part `-Version` before updating an installed package. Each build uses a new staging directory under `artifacts/staging`; the script does not delete existing files or include anything from the user's archive directory.
 
 The unsigned artifact is intended for build review. Windows installation requires signing and trust; the installer never bypasses signature validation or changes developer mode.
+
+The executable, Start menu entry, window title and Windows share target are all named **ChatPCBridge**. Building or running the EXE alone does not register a share target: install the signed MSIX using the steps below. Once installed, closing the app or finishing a share does not unregister it. The app has no automatic uninstall or trial-expiry logic. If a source application does not list it, reopen that application's forwarding dialog and confirm the package is still installed; discovery also depends on the source application, shared file type and Windows version.
 
 ## Run the automated checks
 
